@@ -39,8 +39,8 @@ A beautiful, demo-ready Airbnb-style rental application built with Flutter front
 ### 1. Clone & Setup
 
 ```bash
-git clone <repository-url>
-cd ss
+git clone https://github.com/wathika-eng/property-app
+cd propterty-app
 
 # ensure flutter is installed
 flutter --version # 3.35
