@@ -41,6 +41,11 @@ A beautiful, demo-ready Airbnb-style rental application built with Flutter front
 ```bash
 git clone <repository-url>
 cd ss
+
+# ensure flutter is installed
+flutter --version # 3.35
+# else curl -sS https://webi.sh/flutter | sh
+
 flutter pub get
 cd backend && dart pub get && cd ..
 ```
@@ -208,6 +213,10 @@ flutter test
 - Web: `flutter build web`
 - Android: `flutter build apk --release`
 - iOS: `flutter build ios --release`
+
+![demo1](image.png)
+
+![demo2](image-1.png)
 
 ## 🐛 Troubleshooting
 
