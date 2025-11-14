@@ -12,6 +12,7 @@ import '../lib/controllers/bookings_controller.dart';
 import '../lib/controllers/reviews_controller.dart';
 import '../lib/utils/middleware.dart';
 import '../lib/services/seed_data.dart';
+import '../lib/utils/openapi.dart';
 
 void main() async {
   // Initialize database
@@ -22,6 +23,15 @@ void main() async {
 
   // Configure routes
   final router = Router();
+
+  // OpenAPI / Swagger JSON
+  router.get('/api/docs/openapi.json', (Request request) {
+    // Prefer the Host header from the request (works behind proxies/load-balancers).
+    // Fall back to a sensible default; avoid referencing `server` which is declared later.
+    final host = request.headers['host'] ?? 'localhost:8080';
+    final json = openApiJson(host: host);
+    return Response.ok(json, headers: {'Content-Type': 'application/json'});
+  });
 
   // Auth routes (no auth middleware)
   router.post('/api/auth/register', AuthController.register);
@@ -56,6 +66,7 @@ void main() async {
   final pipeline = Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(corsHeaders())
+    .addMiddleware(rateLimitMiddleware(requestsPerMinute: 60))
       .addMiddleware(authMiddleware())
       .addHandler(router);
 

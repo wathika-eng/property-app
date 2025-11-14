@@ -1,6 +1,6 @@
 class AppConstants {
   static const String appName = 'StaySpace';
-  static const String baseUrl = 'http://localhost:8080/api';
+  static const String baseUrl = 'https://property-app-backend-9typ.onrender.com/api';
   
   // API Endpoints
   static const String authLogin = '/auth/login';
