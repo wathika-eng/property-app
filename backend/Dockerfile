@@ -1,5 +1,5 @@
 # Use official Dart runtime as base image
-FROM dart:stable AS build
+FROM dart:3.9.2  AS build
 
 WORKDIR /app
 COPY pubspec.yaml pubspec.lock ./
@@ -14,7 +14,7 @@ FROM debian:bookworm-slim
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates libsqlite3-0 libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
-    
+
 WORKDIR /app
 RUN mkdir -p /app/backend/data
 

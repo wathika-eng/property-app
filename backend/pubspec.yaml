@@ -1,25 +1,25 @@
 name: ss_backend
 description: Dart backend for StaySpace - Airbnb-style rental app
 version: 1.0.0
-publish_to: 'none'
+publish_to: "none"
 
 environment:
-  sdk: ^3.9.2
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   # Web server framework
   shelf: ^1.4.1
   shelf_router: ^1.1.4
   shelf_cors_headers: ^0.1.5
-  
+
   # Database
   sqlite3: ^2.4.0
   path: ^1.8.3
-  
+
   # Authentication
   dart_jsonwebtoken: ^2.12.2
   crypto: ^3.0.3
-  
+
   # Utilities
   uuid: ^4.1.0
 
