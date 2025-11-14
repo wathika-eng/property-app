@@ -36,6 +36,8 @@ A beautiful, demo-ready Airbnb-style rental application built with Flutter front
 - Android Studio / VS Code
 - Android device/emulator or iOS simulator
 
+API Backend: <https://property-app-backend-9typ.onrender.com/api/listings>
+
 ### 1. Clone & Setup
 
 ```bash

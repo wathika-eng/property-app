@@ -58,6 +58,31 @@ class _BookingsScreenState extends State<BookingsScreen> with TickerProviderStat
             return const Center(child: CircularProgressIndicator());
           }
 
+          if (bookingsProvider.errorMessage != null) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.error_outline, size: 64, color: AppColors.error),
+                    const SizedBox(height: 12),
+                    Text(
+                      bookingsProvider.errorMessage!,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.error),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    widgets.CustomButton(
+                      text: 'Retry',
+                      onPressed: () => bookingsProvider.loadBookings(),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
           final bookings = bookingsProvider.bookings;
           final now = DateTime.now();
 

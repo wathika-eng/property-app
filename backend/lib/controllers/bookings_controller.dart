@@ -131,7 +131,16 @@ class BookingsController {
       final checkInDate = DateTime.parse(checkIn);
       final checkOutDate = DateTime.parse(checkOut);
 
-      if (checkOutDate.isBefore(checkInDate) || checkInDate.isBefore(DateTime.now())) {
+      // Use date-only comparisons to avoid time-of-day / timezone surprises.
+      final checkInDateOnly = DateTime(checkInDate.year, checkInDate.month, checkInDate.day);
+      final checkOutDateOnly = DateTime(checkOutDate.year, checkOutDate.month, checkOutDate.day);
+
+      // Allow bookings starting today or later. Reject if check-in is before today
+      // or if check-out is on or before check-in (must be strictly after).
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+
+      if (!checkOutDateOnly.isAfter(checkInDateOnly) || checkInDateOnly.isBefore(today)) {
         return Response.badRequest(
           body: json.encode({'error': 'Invalid booking dates'}),
           headers: {'Content-Type': 'application/json'},

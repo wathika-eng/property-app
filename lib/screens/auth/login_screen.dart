@@ -44,24 +44,58 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              Navigator.of(context).pushReplacementNamed('/listings');
+            }
+          },
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 40),
+              const SizedBox(height: 8),
               _buildHeader(),
-              const SizedBox(height: 48),
-              _buildLoginForm(),
               const SizedBox(height: 24),
+              _buildLoginForm(),
+              const SizedBox(height: 16),
               _buildDemoCredentials(),
-              const SizedBox(height: 32),
+              const SizedBox(height: 20),
+              _buildGuestButton(),
+              const SizedBox(height: 20),
               _buildSignUpPrompt(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildGuestButton() {
+    return widgets.CustomButton(
+      text: 'Continue as Guest',
+      onPressed: () async {
+        // Use demo user credentials for guest experience without manual input
+        const guestEmail = 'john@example.com';
+        const guestPassword = 'password123';
+
+        _emailController.text = guestEmail;
+        _passwordController.text = guestPassword;
+
+        _handleLogin();
+      },
+      width: double.infinity,
+      isOutlined: true,
     );
   }
 
@@ -218,30 +252,45 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildDemoAccount(String type, String email) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            decoration: BoxDecoration(
-              color: AppColors.secondary,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              type,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: AppColors.secondary,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  type,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: 8),
+              Text(
+                email,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 8),
-          Text(
-            email,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontFamily: 'monospace',
-            ),
+          widgets.CustomButton(
+            text: 'Use',
+            onPressed: () {
+              _emailController.text = email;
+              _passwordController.text = 'password123';
+              _handleLogin();
+            },
+            width: 90,
+            isOutlined: true,
           ),
         ],
       ),

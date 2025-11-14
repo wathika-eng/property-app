@@ -55,6 +55,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: const Text('Create Account'),
         elevation: 0,
         backgroundColor: AppColors.background,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              Navigator.of(context).pushReplacementNamed('/listings');
+            }
+          },
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

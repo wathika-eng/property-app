@@ -33,9 +33,9 @@ class StaySpaceApp extends StatelessWidget {
         title: AppConstants.appName,
         theme: AppTheme.lightTheme,
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
+  // Show listings first for all users; login is optional and can be triggered later
+  home: const ListingsScreen(),
         routes: {
-          '/': (context) => const ListingsScreen(), // Start with listings for everyone
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const RegisterScreen(),
           '/home': (context) => const MainNavigationScreen(),
@@ -54,18 +54,45 @@ class AuthWrapper extends StatefulWidget {
 }
 
 class _AuthWrapperState extends State<AuthWrapper> {
+  VoidCallback? _authListener;
+
   @override
   void initState() {
     super.initState();
     // Check authentication status on app start
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      if (authProvider.isLoggedIn) {
-        Navigator.of(context).pushReplacementNamed('/home');
+
+      void navigateAfterLoad() {
+        if (authProvider.isLoggedIn) {
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          Navigator.of(context).pushReplacementNamed('/login');
+        }
+      }
+
+      if (authProvider.isLoading) {
+        // Wait until loading finishes
+        _authListener = () {
+          if (!authProvider.isLoading) {
+            navigateAfterLoad();
+            if (_authListener != null) authProvider.removeListener(_authListener!);
+          }
+        };
+        authProvider.addListener(_authListener!);
       } else {
-        Navigator.of(context).pushReplacementNamed('/login');
+        navigateAfterLoad();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    if (_authListener != null) {
+      authProvider.removeListener(_authListener!);
+    }
+    super.dispose();
   }
 
   @override
