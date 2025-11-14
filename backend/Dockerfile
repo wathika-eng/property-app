@@ -2,7 +2,7 @@
 FROM dart:3.9.2  AS build
 
 WORKDIR /app
-COPY pubspec.yaml pubspec.lock ./
+COPY pubspec.yaml  ./
 RUN dart pub get
 COPY . .
 RUN dart pub get --offline
