@@ -1,8 +1,8 @@
-name: ss
+name: Property Management
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -34,31 +34,31 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  
+
   # State Management
   provider: ^6.0.5
-  
+
   # HTTP requests
   http: ^1.1.0
-  
+
   # Image handling
   cached_network_image: ^3.3.0
   image_picker: ^1.0.4
-  
+
   # Navigation
   go_router: ^12.1.3
-  
+
   # UI Components
   flutter_rating_bar: ^4.0.1
   # carousel_slider: ^4.2.1 # Commented out due to conflict
-  
+
   # Storage & Local DB
   shared_preferences: ^2.2.2
   sqflite: ^2.3.0
-  
+
   # JWT & Authentication
   jwt_decode: ^0.3.1
-  
+
   # Date formatting
   intl: ^0.18.1
 
@@ -78,7 +78,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
