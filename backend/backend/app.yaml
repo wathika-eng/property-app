@@ -1,0 +1,5 @@
+kind: wasmer.io/App.v0
+name: backend
+owner: wathika-eng
+package: wasmer/hello@^0.1.3
+app_id: da_nYYILtXU5yX0

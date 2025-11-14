@@ -60,7 +60,7 @@ void main() async {
       .addHandler(router);
 
   // Start server
-  final server = await serve(pipeline, 'localhost', 8080);
+  final server = await serve(pipeline, InternetAddress.anyIPv4, 8080);
   print('StaySpace Backend Server running on http://${server.address.host}:${server.port}');
 
   // Handle shutdown gracefully
