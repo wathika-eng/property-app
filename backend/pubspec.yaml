@@ -1,4 +1,4 @@
-name: property_app_backend
+name: server
 description: Dart backend for StaySpace - Airbnb-style rental app
 version: 1.0.0
 publish_to: "none"
