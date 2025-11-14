@@ -11,13 +11,10 @@ RUN dart compile exe bin/server.dart -o bin/server
 FROM debian:bookworm-slim
 
 # Install SQLite3 library and create symlink
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    libsqlite3-0 \
-    libsqlite3-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && ln -s /usr/lib/x86_64-linux-gnu/libsqlite3.so.0 /usr/lib/x86_64-linux-gnu/libsqlite3.so
-
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates libsqlite3-0 libsqlite3-dev \
+    && rm -rf /var/lib/apt/lists/*
+    
 WORKDIR /app
 RUN mkdir -p /app/backend/data
 
