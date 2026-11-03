@@ -107,8 +107,8 @@ class ApiService {
       if (userJson != null) {
         return User.fromJson(json.decode(userJson));
       }
-    } catch (e) {
-      print('Error getting current user: $e');
+    } catch (_) {
+      return null;
     }
     return null;
   }
@@ -141,10 +141,6 @@ class ApiService {
       // Don't require auth for general listings - allow guest browsing
       final response = await http.get(uri, headers: await _getHeaders(includeAuth: false));
       
-      print('API Request: ${uri.toString()}');
-      print('Response Status: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-      
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final listingsJson = data['listings'] as List;
@@ -153,7 +149,6 @@ class ApiService {
       
       throw Exception('HTTP ${response.statusCode}: ${response.body}');
     } catch (e) {
-      print('API Service Error: $e');
       throw Exception('Network error: $e');
     }
   }
@@ -325,7 +320,7 @@ class ApiService {
   // Reviews
   static Future<Map<String, dynamic>> getReviews(String listingId) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/api/listings/$listingId/reviews'),
+      Uri.parse('$baseUrl${AppConstants.listings}/$listingId/reviews'),
       headers: await _getHeaders(includeAuth: false),
     );
     
@@ -342,7 +337,7 @@ class ApiService {
     required String comment,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/api/reviews'),
+      Uri.parse('$baseUrl/reviews'),
       headers: await _getHeaders(),
       body: json.encode({
         'listing_id': listingId,
@@ -360,7 +355,7 @@ class ApiService {
 
   static Future<Map<String, dynamic>> getUserReviews() async {
     final response = await http.get(
-      Uri.parse('$baseUrl/api/reviews/user'),
+      Uri.parse('$baseUrl/reviews/user'),
       headers: await _getHeaders(),
     );
     
@@ -373,7 +368,7 @@ class ApiService {
 
   static Future<void> deleteReview(String reviewId) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/api/reviews/$reviewId'),
+      Uri.parse('$baseUrl/reviews/$reviewId'),
       headers: await _getHeaders(),
     );
     

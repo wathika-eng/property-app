@@ -42,7 +42,6 @@ class ListingsProvider with ChangeNotifier {
       _currentOffset += newListings.length;
       
     } catch (e) {
-      print('Listings Provider Error: $e');
       _setError('Failed to load listings: ${e.toString()}');
     } finally {
       _setLoading(false);

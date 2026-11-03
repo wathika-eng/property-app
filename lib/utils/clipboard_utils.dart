@@ -28,8 +28,7 @@ class ClipboardUtils {
     try {
       final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
       return clipboardData?.text;
-    } catch (e) {
-      print('Error getting clipboard data: $e');
+    } catch (_) {
       return null;
     }
   }
@@ -39,8 +38,7 @@ class ClipboardUtils {
     try {
       final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
       return clipboardData?.text?.isNotEmpty == true;
-    } catch (e) {
-      print('Error checking clipboard: $e');
+    } catch (_) {
       return false;
     }
   }
